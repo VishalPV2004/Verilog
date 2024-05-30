@@ -1,0 +1,16 @@
+module orgate_tb;
+  reg a,b;
+  wire c;
+  
+  orgate dut(.a(a),.b(b),.c(c));
+  
+  initial
+    begin
+      $dumpfile("dump.vcd"); $dumpvars;
+      a = 0; b = 0;
+    #5 a = 1;
+    #5 b = 1;
+    #5 a = 0;
+    #5 b = 0;
+    end
+endmodule

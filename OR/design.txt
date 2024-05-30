@@ -1,0 +1,14 @@
+module orgate(input a,b, output reg c);
+  
+  //Dataflow modelling
+  //assign c = a | b;
+  
+  //Behavioral modelling
+  always @(a,b)
+    begin
+      c = a | b;
+    end
+  
+  //Gate Level modelling
+  //or(c,a,b);
+endmodule
