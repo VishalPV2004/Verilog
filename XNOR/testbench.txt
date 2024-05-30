@@ -1,0 +1,17 @@
+module xnorgate_tb;
+  reg a,b;
+  wire c;
+  
+  xnorgate dut(.a(a),.b(b),.c(c));
+  
+  initial
+    begin
+      $dumpfile("dump.vcd"); $dumpvars;
+      a = 1; b = 0;
+      #5 a = 0;
+      #5 b = 1;
+      
+      #5 a = 1;
+      #5 b = 0;
+    end
+endmodule
