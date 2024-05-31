@@ -1,0 +1,29 @@
+module fulladder(input a, b, c, output reg sum, carry);
+  
+  wire w1, w2, w3;
+
+  //Dataflow modelling
+  /*assign sum = a ^ b ^ c;
+  assign w1 = a & b;
+  assign w2 = b & c;
+  assign w3 = a & c;
+  assign carry = w1 | w2 | w3;*/
+  
+  //Gate level modelling
+  /*xor(sum,a,b,c);
+  and(w1,a,b);
+  and(w2,b,c);
+  and(w3,a,c);
+  or(carry,w1,w2,w3);*/
+  
+  //Behavioral modelling
+  always @(a,b,c)
+    begin
+      sum = a ^ b & c;
+      w1 = a & b;
+      w2 = b & c;
+      w3 = a & c;
+      carry = w1 | w2 | w3;
+    end
+  
+endmodule
