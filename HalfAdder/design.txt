@@ -1,0 +1,17 @@
+module halfadder(input a,b,output reg carry,sum);
+  
+  //Dataflow modelling
+  /*assign sum = a ^ b;
+  assign carry = a & b;*/
+  
+  //Gate level modelling
+  /*xor(sum,a,b);
+  and(carry,a,b);*/
+  
+  //Behavioural modelling
+  always @(a,b)
+    begin
+      sum = a ^ b;
+      carry = a & b;
+    end
+endmodule
