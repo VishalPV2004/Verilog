@@ -1,0 +1,31 @@
+module Sequence_detector_0110(input x, clk, reset, output z);
+  parameter a = 0, b = 1, c = 2, d = 3;
+  reg [1:0] state, nextstate;
+  
+  //Combinational
+  always @(x, state)
+    begin
+      case(state)
+        a : nextstate = x ? a : b;
+        b : nextstate = x ? c : b;
+        c : nextstate = x ? d : b;
+        d : nextstate = x ? a : b;
+        default : nextstate = a;
+      endcase
+    end
+  
+  //Sequential
+  always @(posedge clk or posedge reset)
+    begin
+      if (reset)
+        state <= a;
+      else
+        begin
+          state <= nextstate;
+        end
+    end
+  
+  //Output logic
+  assign z = (state == d);
+endmodule
+      
