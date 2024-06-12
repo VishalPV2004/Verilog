@@ -1,0 +1,28 @@
+module mux_21(input s, input [1:0] a, output reg y);
+
+  always @(s, a) begin
+    case(s)
+      1'b0 : y = a[0];
+      1'b1 : y = a[1];
+      default : y = a[0];
+    endcase
+  end
+endmodule
+
+module mux_81_21(input [7:0] a, input [2:0] s, output y);
+  
+  wire [3:0] w1;
+  
+  wire [1:0] w2;
+  
+  mux_21 m1(s[0],a[0],w1[0]);
+  mux_21 m2(s[0],a[1],w1[1]);
+  mux_21 m3(s[0],a[2],w1[2]);
+  mux_21 m4(s[0],a[3],w1[3]);
+  
+  mux_21 m21(s[1], w1[1:0], w2[0]);
+  mux_21 m22(s[1], w1[3:2], w2[1]);
+  
+  mux_21 m31(s[2], w2, y);
+endmodule
+  

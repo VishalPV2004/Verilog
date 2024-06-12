@@ -1,0 +1,20 @@
+module mux_81_21_tb;
+  reg [7:0] a;
+  reg [2:0] s;
+  wire y;
+  
+  mux_81_21 dut(.a(a), .s(s), .y(y));
+  
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars(0, mux_81_21_tb);
+    
+    a = 8'b01011101; s = 3'b001; #10;
+
+    $finish;
+  end
+  
+  initial begin
+    $monitor("Time : %5d | selection line : %3b | output : %b", $time, s, y);
+  end
+endmodule
