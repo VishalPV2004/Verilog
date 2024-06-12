@@ -1,0 +1,22 @@
+module LED_flasher_FSM_tb;
+  reg clk;
+  wire [2:0] LED;
+  
+  LED_flasher_FSM uut(.clk(clk), .LED(LED));
+  
+  always #5 clk = ~clk;
+  
+  initial begin
+    clk = 1'b0;
+    #100 $finish;
+  end
+  
+  initial begin
+    $dumpfile("LED_flasher_FSM_tb.vcd");
+    $dumpvars(0, LED_flasher_FSM_tb);
+  end
+  
+  always @(posedge clk) begin
+    $monitor("time: %t | clk: %b | LED: %b", $time, clk, LED);
+  end
+endmodule

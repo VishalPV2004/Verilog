@@ -1,0 +1,24 @@
+module LED_flasher_FSM(input clk, output reg [2:0] LED);
+
+  parameter s0 = 2'b00, s1 = 2'b01, s2 = 2'b10;
+  reg [1:0] state;
+
+  always @(state) begin
+    case(state)
+      s0 : LED = 3'b100;
+      s1 : LED = 3'b010;
+      s2 : LED = 3'b001;
+      default : LED = 3'b100;
+    endcase
+  end
+
+  always @(posedge clk) begin
+    case(state)
+      s0 : state <= s1;
+      s1 : state <= s2;
+      s2 : state <= s0;
+      default : state <= s0;
+    endcase
+  end
+
+endmodule

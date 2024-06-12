@@ -1,0 +1,31 @@
+module tb;
+  reg clk, x;
+  wire z;
+  
+  Serial_Parity_Checker uut(.clk(clk), .x(x), .z(z));
+  
+  always #5 clk = ~clk;
+  
+  initial begin
+    $dumpfile("dump.vcd"); 
+    $dumpvars;
+    
+    clk = 0;
+    x = 0;
+    
+    #2 x = 0; 
+    #10 x = 1; 
+    #10 x = 1; 
+    #10 x = 1;
+    #10 x = 0; 
+    #10 x = 1; 
+    #10 x = 1; 
+    #10 x = 0;
+    #10 x = 0; 
+    #10 x = 1; 
+    #10 x = 1; 
+    #10 x = 0;
+    
+    #10 $finish;
+  end
+endmodule

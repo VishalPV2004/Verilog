@@ -1,0 +1,21 @@
+module Serial_Parity_Checker(input x, clk, output reg z);
+  
+  reg [1:0] State, nextState;
+  parameter even = 0, odd = 1;
+  
+  always @(State, x) begin
+    case(State)
+      even: nextState = x ? odd : even;
+      odd: nextState = x ? even : odd;
+      default: nextState = even;
+    endcase
+  end
+  
+  always @(posedge clk) begin
+    State <= nextState;
+    case(State)
+      even: z <= x ? 1 : 0;
+      odd: z <= x ? 0 : 1;
+    endcase
+  end
+endmodule
