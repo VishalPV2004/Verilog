@@ -1,0 +1,8 @@
+module BitComparator_1 (input a,b , output eq, xy, yx);
+  
+  //Dataflow modelling
+  assign eq = (~a & ~b) | (a & b);
+  assign xy = (a & ~b);
+  assign yx = (~a & b);
+  
+endmodule
