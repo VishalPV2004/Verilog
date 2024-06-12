@@ -1,0 +1,49 @@
+module tb_Sequence_Detector_1101;
+
+reg x;
+reg clk;
+reg reset;
+wire z;
+
+Sequence_Detector_1101 uut (
+    .x(x),
+    .clk(clk),
+    .reset(reset),
+    .z(z)
+);
+
+initial begin
+    $dumpfile("SD1101.vcd");
+    $dumpvars(0, tb_Sequence_Detector_1101);
+
+    x = 0;
+    clk = 0;
+    reset = 0;
+
+    reset = 1;
+    #5;
+    reset = 0;
+
+    x = 1; #10;
+    x = 1; #10;
+    x = 0; #5;
+    x = 1; #10;
+
+    x = 0; #10;
+    x = 1; #10;
+    x = 1; #10;
+    x = 0; #10;
+    x = 1; #10;
+
+    x = 0; #10;
+    x = 1; #10;
+    x = 1; #10;
+    x = 0; #10;
+    x = 1; #10;
+    
+    $finish;
+end
+
+always #5 clk = ~clk;
+
+endmodule
