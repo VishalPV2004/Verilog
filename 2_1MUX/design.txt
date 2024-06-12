@@ -1,0 +1,10 @@
+module mux_21(input s, input [1:0] a, output reg y);
+
+  always @(s, a) begin
+    case(s)
+      1'b0 : y = a[0];
+      1'b1 : y = a[1];
+      default : y = a[0];
+    endcase
+  end
+endmodule

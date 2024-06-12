@@ -1,0 +1,25 @@
+module mux_21_tb;
+  wire y;
+  reg [1:0] a;
+  reg s;
+  
+  mux_21 dut(.s(s), .a(a), .y(y));
+  
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars(0, mux_21_tb);
+    
+    a = 2'b10;
+    s = 1'b1; 
+    #10;
+    
+    s = 1'b0;
+    #10;
+    
+    $finish;
+  end
+  
+  initial begin
+    $monitor("Selection line : %b | Inputs: %b | Output : %b", s, a, y);
+  end
+endmodule
