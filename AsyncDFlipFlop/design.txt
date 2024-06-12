@@ -1,0 +1,9 @@
+module d_ff(input d,output reg q, input clk, input reset);
+  always @(posedge clk or negedge reset)
+    begin
+      if (reset == 1'b0)
+        q <= 0;
+      else
+        q <= d;
+    end
+endmodule
