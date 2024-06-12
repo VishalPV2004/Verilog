@@ -1,0 +1,91 @@
+module traffic_controller(input x, input clk, input reset, output reg [1:0] high, output reg [1:0] country);
+
+  parameter s0 = 0, s1 = 1, s2 = 2, s3 = 3, s4 = 4;
+  
+  parameter red = 2'b01, yellow = 2'b10, green = 2'b11;
+  
+  reg [2:0] state;
+
+  initial
+    begin
+      state = s0;
+      high = green;
+      country = red;
+    end
+  // Sequential logic
+always @(posedge clk or posedge reset) begin
+  if (reset)
+    state <= s0;
+  else begin
+    case(state)
+      s0: state <= (x) ? s1 : s0;
+      s1: state <= (x) ? s2 : s1;
+      s2: state <= (x) ? s3 : s2;
+      s3: state <= (x) ? s4 : s3;
+      s4: state <= (x) ? s0 : s4;
+      default: state <= s0;
+    endcase
+  end
+end
+
+  // Combinational logic
+  always @(*) begin
+    case(state)
+      s0: begin
+        if (x) begin
+          high = yellow;
+          country = red;
+        end else begin
+          high = green;
+          country = red;
+        end
+      end
+
+      s1: begin
+        if (x) begin
+          high = red;
+          country = red;
+        end else begin
+          high = yellow;
+          country = red;
+        end
+      end
+
+      s2: begin
+        if (x) begin
+          high = red;
+          country = green;
+        end else begin
+          high = red;
+          country = red;
+        end
+      end
+
+      s3: begin
+        if (x) begin
+          high = red;
+          country = green;
+        end else begin
+          high = red;
+          country = yellow;
+        end
+      end
+
+      s4: begin
+        if (x) begin
+          high = red;
+          country = green;
+        end else begin
+          high = green;
+          country = red;
+        end
+      end
+
+      default: begin
+        high = red;
+        country = red;
+      end
+    endcase
+  end
+
+endmodule

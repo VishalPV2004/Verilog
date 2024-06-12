@@ -1,0 +1,46 @@
+module traffic_controller_tb;
+
+  reg x;
+  reg clk;
+  reg reset;
+  wire [1:0] high;
+  wire [1:0] country;
+
+  traffic_controller uut (
+    .x(x),
+    .clk(clk),
+    .reset(reset),
+    .high(high),
+    .country(country)
+  );
+
+  always #5 clk = ~clk; 
+
+  initial begin
+    $dumpfile("dump.vcd"); $dumpvars;
+    clk = 0;
+    reset = 1;
+    x = 0;
+
+    #10 reset = 0;
+
+    #10 x = 0;
+    #10 x = 1;
+    #10 x = 0;
+    #10 x = 1;
+    #10 x = 0;
+
+    #10 reset = 1;
+    #10 reset = 0;
+    #10 x = 1;
+    #10 x = 0;
+    #10 x = 1;
+
+    #50 $finish;
+  end
+
+  initial begin
+    $monitor("Time: %0d, Reset: %b, x: %b, State: %b, High: %b, Country: %b", $time, reset, x, uut.state, high, country);
+  end
+
+endmodule
