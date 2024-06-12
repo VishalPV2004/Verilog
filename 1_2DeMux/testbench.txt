@@ -1,0 +1,30 @@
+module demux_12_tb;
+  reg y;
+  reg s;
+  wire [1:0] a;
+  
+  demux_12 dut(.y(y), .s(s), .a(a));
+  
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars;
+    
+    y = 1'b1; s = 1'b0;
+    #10;
+    
+    y = 1'b1; s = 1'b1;
+    #10;
+    
+    y = 1'b0; s = 1'b0;
+    #10;
+    
+    y = 1'b0; s = 1'b1;
+    #10;
+    
+    $finish;
+  end
+  
+  initial begin
+    $monitor("Time: %5d | y: %b | s: %b | a: %b", $time, y, s, a);
+  end
+endmodule

@@ -1,0 +1,15 @@
+module demux_12(input y,input s,output reg [1:0] a);
+  
+  //Data flow modelling
+  
+  /*assign a[0] = ~s & y;
+  assign a[1] = s & y;*/
+  
+  //Behavioral
+  always @(y,s)
+    begin
+      a[0] = !s & y;
+      a[1] = s & y;
+    end
+  
+endmodule
