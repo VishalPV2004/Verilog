@@ -1,0 +1,41 @@
+module BitComparator_2_tb;
+  reg [1:0] a;
+  reg [1:0] b;
+  wire eq, ab, ba;
+  
+  BitComparator_2 uut(.a(a), .b(b), .eq(eq), .ab(ab), .ba(ba));
+  
+  initial
+    begin
+      $dumpfile("dump.vcd"); 
+      $dumpvars(0, BitComparator_2_tb);
+      
+      a = 2'b00; b = 2'b00;
+      #10;
+      
+      a = 2'b00; b = 2'b01;
+      #10;
+      
+      a = 2'b01; b = 2'b00;
+      #10;
+      
+      a = 2'b01; b = 2'b01;
+      #10;
+      
+      a = 2'b10; b = 2'b11;
+      #10;
+      
+      a = 2'b11; b = 2'b10;
+      #10;
+      
+      a = 2'b11; b = 2'b11;
+      #10;
+      
+      $finish;
+    end
+    
+  initial
+    begin
+      $monitor("At time %t: a = %b, b = %b, eq = %b, ab = %b, ba = %b", $time, a, b, eq, ab, ba);
+    end
+endmodule
