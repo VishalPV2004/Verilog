@@ -1,0 +1,17 @@
+module halfsubtractor(input a,b,output diff, borrow);
+  
+  assign diff = a ^ b;
+  assign borrow = ~a & b;
+  
+  //Behavioaral-modelling
+  /*always @(a,b)
+    begin
+      diff = a ^ b;
+      borrow = ~a & b;
+    end */
+  
+  //Gate Level modelling
+  /*xor(diff,a,b);
+  and(borrow,not(a),b);
+  */
+endmodule	
