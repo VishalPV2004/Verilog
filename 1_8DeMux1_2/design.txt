@@ -1,0 +1,32 @@
+module demux_12(input y,input s,output reg [1:0] a);
+  
+  //Data flow modelling
+  
+  /*assign a[0] = ~s & y;
+  assign a[1] = s & y;*/
+  
+  //Behavioral
+  always @(y,s)
+    begin
+      a[0] = !s & y;
+      a[1] = s & y;
+    end
+  
+endmodule
+
+module demux_18_12(input a,input [2:0] s, output [7:0] y);
+  
+  wire [1:0] w1;
+  wire [3:0] w2;
+  
+  demux_12 d1(a,s[2],w1);
+  
+  demux_12 d2(w1[0],s[1],w2[1:0]);
+  demux_12 d3(w1[1],s[1],w2[3:2]);
+  
+  demux_12 d4(w2[0], s[0], y[1:0]);
+  demux_12 d5(w2[1], s[0], y[3:2]);
+  demux_12 d6(w2[2], s[0], y[5:4]);
+  demux_12 d7(w2[3], s[0], y[7:6]);
+
+endmodule
