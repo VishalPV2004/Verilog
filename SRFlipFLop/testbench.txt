@@ -1,0 +1,55 @@
+module tb_SR_FlipFlop;
+
+  reg s;
+  reg r;
+  reg reset;
+  reg clk;
+  wire q;
+  wire qbar;
+
+  SR_FlipFlop uut (
+    .s(s),
+    .r(r),
+    .reset(reset),
+    .clk(clk),
+    .q(q),
+    .qbar(qbar)
+  );
+
+  always #5 clk = ~clk;
+
+  initial begin
+    
+    $dumpfile("dump.vcd");     $dumpvars(0, tb_SR_FlipFlop);
+
+    
+    clk = 0;
+    reset = 0;
+    s = 0;
+    r = 0;
+
+    reset = 1;
+    #10;
+    reset = 0;
+
+    s = 1;
+    r = 0;
+    #10;
+
+    s = 0;
+    r = 1;
+    #10;
+
+    s = 0;
+    r = 0;
+    #10;
+
+    s = 1;
+    r = 1;
+    #10;
+
+    $finish;
+  end
+
+  initial begin
+    $monitor("Time=%0d clk=%b reset=%b s=%b r=%b q=%b qbar=%b", $time, clk, reset, s, r, q, qbar);
