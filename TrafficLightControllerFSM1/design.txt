@@ -1,0 +1,66 @@
+`define r2gdelay 2
+`define y2rdelay 3
+
+module TrafficLight(input x, input clk, input reset, output reg [1:0] highway, output reg [1:0] country);
+  
+  reg [2:0] state, nextstate;
+  
+  parameter s0 = 3'b000, s1 = 3'b001, s2 = 3'b010, s3 = 3'b011, s4 = 3'b100;
+  parameter red = 2'b00, yellow = 2'b01, green = 2'b10;
+  
+  // Combinational
+  always @(state, x)
+  begin
+    case(state)
+      s0 : nextstate = (x) ? s1 : s0;
+      s1 : begin
+        @(posedge clk) repeat(`y2rdelay) nextstate = s2;
+      end
+      s2 : begin
+        @(posedge clk) repeat(`r2gdelay) nextstate = s3;
+      end
+      s3 : begin
+        if (x)
+          nextstate = s3;
+        else
+          nextstate = s4;
+      end
+      s4 : begin
+        @(posedge clk) repeat(`r2gdelay) nextstate = s0;
+      end
+      default : nextstate = s0;
+    endcase
+  end
+  
+  // Sequential
+  always @(posedge clk or posedge reset)
+  begin
+    if (reset)
+      state <= s0;
+    else
+      state <= nextstate;
+  end
+  
+  // Output logic
+  always @(state)
+  begin
+    case(state)
+      s0 : begin
+        highway = green;
+        country = red;
+      end
+      
+      s1 : begin
+        highway = yellow;
+        country = red;
+      end
+      
+      s2 : begin
+        highway = red;
+        country = red;
+      end
+      
+      s3 : begin
+        highway = red;
+        country = green;
+      end
